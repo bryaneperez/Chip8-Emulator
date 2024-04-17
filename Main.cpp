@@ -3,16 +3,13 @@
     A lot of people say that CHIP-8 is a good beginner system so I have done this to learn more and maybe continue on this path for more complex emulation.
 */
 
-
+#include <string>
 #include <chrono>
 #include <iostream>
-#include <string>
 #include "Chip8.hpp"
 #include "Platform.hpp"
 
-//Width: 64, Height: 32
-
-int main (int argc, char* argv[]){
+int main (int argc, char** argv){
     if (argc != 4) {
         std::cerr << "Usage: " << argv[0] << " <Scale> <Delay> <ROM>\n";
         std::exit(EXIT_FAILURE);
@@ -20,12 +17,12 @@ int main (int argc, char* argv[]){
 
     int videoScale = std::stoi (argv[1]);
     int cycleDelay = std::stoi (argv[2]);
-    char const* romFilename = "./Test.ch8";
+    char const* romFilename = argv[3];
 
-    Platform platform("CHIP-8 Emulator", 64 * videoScale, 32 * videoScale, 64, 32);
+    Platform platform("CHIP-8 Emulator", VIDEO_WIDTH * videoScale, VIDEO_HEIGHT * videoScale, VIDEO_WIDTH, VIDEO_HEIGHT);
     Chip8 chip8;
     chip8.LoadROM(romFilename);
-    int videoPitch = sizeof(chip8.video[0]) * 64;
+    int videoPitch = sizeof(chip8.video[0]) * VIDEO_WIDTH;
 
     auto lastCycleTime = std::chrono::high_resolution_clock::now();
     bool quit = false;
