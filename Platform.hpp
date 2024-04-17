@@ -21,5 +21,4 @@ class Platform {
         SDL_Texture* texture{};
         SDL_GLContext gl_context{};
         GLuint framebuffer_texture; 
-
 };
